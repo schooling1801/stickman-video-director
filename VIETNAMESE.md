@@ -1,6 +1,6 @@
-# Nhánh `vn-channel` — bản vá cho kênh tiếng Việt
+# Bản vá cho kênh tiếng Việt
 
-Nhánh này giữ nguyên Skill gốc của kaomei và chỉ thêm các bản vá nhỏ, không đổi mặc định, để dễ cập nhật từ upstream.
+Các bản vá đã được merge vào `main` của fork này (nhánh gốc của chúng là `vn-channel`). Fork giữ nguyên Skill gốc của kaomei và chỉ thêm các bản vá nhỏ, không đổi mặc định, để dễ cập nhật từ upstream.
 
 | Bản vá | Cách dùng |
 |---|---|
@@ -12,10 +12,14 @@ Font mặc định cho phụ đề B1–B4 khổ ngang (Noto Sans) và chữ hoo
 
 ## Cập nhật từ upstream
 
+Cách đơn giản: trên trang fork ở GitHub, bấm **Sync fork** → **Update branch**. Nếu GitHub báo xung đột, nhờ Claude xử lý.
+
+Hoặc bằng lệnh:
+
 ```bash
 git remote add upstream https://github.com/kaomei/stickman-video-director.git
 git fetch upstream main
-git checkout vn-channel && git rebase upstream/main
+git checkout main && git merge upstream/main
 ```
 
-Sau khi rebase, chạy lại test của Skill (`npm test` trong `skills/directing-stickman-videos`) rồi mới nâng phiên bản submodule trong repo kênh.
+Sau khi cập nhật, chạy lại test của Skill (`npm test` trong `skills/directing-stickman-videos`) rồi mới nâng phiên bản submodule trong repo kênh.
