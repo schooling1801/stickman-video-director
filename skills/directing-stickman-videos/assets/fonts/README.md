@@ -21,3 +21,12 @@ The bundled face supports Latin, Cyrillic and Vietnamese hook copy. Uncovered sc
 - SHA-256: `dd9a89a019b4849f66ab75455fe7bdf931311042cbb0f0f97acc061539703180`.
 
 The project owner approved Archivo Black as B6’s default subtitle face on 2026-11-13 after a same-size/outline comparison with the earlier Arial Black sample. Preserve B6’s fixed caption size, baseline, outline and phrase timing. The historical sample still supplies the drawing/animation reference; this approved font change does not require a proprietary font for new stories.
+
+## Vietnamese handwritten font (vn-channel fork)
+
+- File: `PatrickHand.ttf`, the unmodified Patrick Hand regular face, added for Vietnamese channels because `Caveat.ttf` lacks Vietnamese glyphs (ơ, ư and most stacked tone marks).
+- Source: [Google Fonts / Patrick Hand](https://github.com/google/fonts/tree/main/ofl/patrickhand).
+- License: [SIL Open Font License 1.1](OFL-PatrickHand.txt), including the original copyright notice.
+- SHA-256: `0f173b3e6cb6d1af25babf7f0057c5ac4ee11f9992b0469bb817e967ef4ad0fc`.
+
+Not a default: select it with `AUTOPILOT_FONT=<skill>/assets/fonts/PatrickHand.ttf` or the project `font` field. Upstream defaults and fingerprints are unchanged.

@@ -12,7 +12,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--model', default='base')
     parser.add_argument('--language')
-    parser.add_argument('--device', default='cpu')
+    parser.add_argument('--device', default='auto', help='auto (CUDA when available), cpu or cuda')
     parser.add_argument('--allow-model-download', action='store_true')
     args = parser.parse_args()
     if args.output.exists():
@@ -29,8 +29,11 @@ def main():
     cached = cache / f'{args.model}.pt'
     if not cached.is_file() and not args.allow_model_download:
         parser.error('Model not cached; --allow-model-download is required for a download')
+    if args.device == 'auto':
+        import torch
+        args.device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = whisper.load_model(args.model if args.allow_model_download else str(cached), device=args.device, download_root=str(cache))
-    result = model.transcribe(str(args.audio), language=args.language, word_timestamps=True, fp16=False, verbose=False)
+    result = model.transcribe(str(args.audio), language=args.language, word_timestamps=True, fp16=args.device == 'cuda', verbose=False)
     words = [{k: w[k] for k in ('start', 'end', 'word')} for s in result['segments'] for w in s.get('words', []) if w['end'] > w['start']]
     if not words:
         parser.error('No aligned words returned; inspect the audio')
