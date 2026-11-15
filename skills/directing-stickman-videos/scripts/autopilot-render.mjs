@@ -238,7 +238,8 @@ export async function painter(p, {pictureOnly = false} = {}) {
 export function videoEncoderArgs(env = process.env) {
   const encoder = env.AUTOPILOT_VIDEO_ENCODER || 'libx264';
   if (encoder === 'libx264') return ['-c:v', 'libx264', '-preset', 'fast', '-crf', '20'];
-  if (encoder === 'h264_nvenc' || encoder === 'hevc_nvenc') return ['-c:v', encoder, '-preset', 'p5', '-rc', 'vbr', '-cq', '20', '-b:v', '0'];
+  // -bf 0 + -fps_mode cfr: with NVENC B-frames the last frame came out short (30.0006 fps measured) and B4's output check failed.
+  if (encoder === 'h264_nvenc' || encoder === 'hevc_nvenc') return ['-c:v', encoder, '-preset', 'p5', '-rc', 'vbr', '-cq', '20', '-b:v', '0', '-bf', '0', '-fps_mode', 'cfr'];
   throw new Error(`Unsupported AUTOPILOT_VIDEO_ENCODER: ${encoder} (use libx264, h264_nvenc or hevc_nvenc)`);
 }
 async function encode(p, frame, start, frames, target) {
